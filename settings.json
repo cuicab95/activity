@@ -1,0 +1,27 @@
+{
+  "TIME_ZONE": "America/Merida",
+  "DB": {
+    "HOST": "localhost",
+    "NAME": "activity",
+    "USER": "admin",
+    "PASSWORD": "admin",
+    "PORT": "5432"
+  },
+  "USE_HTTPS": false,
+  "SECURITY": {
+    "SECRET_KEY": "qdfgfiqli#scqqo$sy8+r@hs9mekng331=6g456h+qq(%xrjv!",
+    "DAYS_TO_ACTIVATE_ACCOUNT": 3,
+    "LOGIN_REDIRECT_URL": "/",
+    "ALLOWED_HOSTS": [
+      "127.0.0.1",
+      "localhost",
+      "*"
+    ]
+  },
+  "DEBUG": true,
+  "URL_SERVER": "http://localhost:8000",
+  "LOGGING": {
+    "DEBUG_FILE": "debug.log",
+    "TRACEBACK_FILE": "error.log"
+  }
+}
