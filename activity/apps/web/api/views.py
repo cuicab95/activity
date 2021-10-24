@@ -14,7 +14,7 @@ class AddActivityViewSet(viewsets.ModelViewSet):
     serializer_class = ActivitySerializer
     queryset = Activity.objects.all().order_by('-created_at_datetime')
 
-    def list(self, request):
+    def list(self, request, *args, **kwargs):
         kwargs = {}
         if self.request.query_params == {}:
             kwargs['schedule__date__gte'] = (datetime.datetime.now() - datetime.timedelta(days=3)).date()
