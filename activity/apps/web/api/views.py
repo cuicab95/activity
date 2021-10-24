@@ -39,7 +39,8 @@ class AddActivityViewSet(viewsets.ModelViewSet):
                 schedule = serializer.validated_data['schedule']
                 if property_obj.status != "ACT":
                     return Response({'property': 'La propiedad debe tener el estatus activada'}, status=status.HTTP_400_BAD_REQUEST)
-                if property_obj.schedule_available and schedule < property_obj.schedule_available:
+                end_schedule = schedule + datetime.timedelta(hours=1)
+                if Activity.objects.filter(property=property_obj, schedule__gte=schedule, schedule__lte=end_schedule).exists():
                     return Response({'message': 'No se puede crear actividades con la misma fecha y hora'}, status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 return Response({'message': 'Actividad creada'}, status=status.HTTP_200_OK)
