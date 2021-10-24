@@ -30,7 +30,7 @@ class ActivitySerializer(serializers.ModelSerializer):
         return representation
 
 
-class ActivityCancelSerializer(serializers.Serializer):
+class ActivityChangeStatusSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True, allow_null=False)
     status = serializers.CharField(max_length=3, required=True)
 
