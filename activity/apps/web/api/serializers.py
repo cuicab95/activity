@@ -29,3 +29,12 @@ class ActivitySerializer(serializers.ModelSerializer):
         representation = {'activities': ActivityPreviewSerializer(instance=instance).data}
         return representation
 
+
+class ActivityCancelSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True, allow_null=False)
+    status = serializers.CharField(max_length=3, required=True)
+
+
+class ActivityRescheduleSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True, allow_null=False)
+    schedule = serializers.DateTimeField(required=True)

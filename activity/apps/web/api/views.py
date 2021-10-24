@@ -1,8 +1,10 @@
 from rest_framework import generics, viewsets, status
 from rest_framework.response import Response
 from .serializers import *
-from .filters import *
 from ..models import *
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 
 class AddActivityViewSet(viewsets.ModelViewSet):
@@ -11,7 +13,6 @@ class AddActivityViewSet(viewsets.ModelViewSet):
     """
     serializer_class = ActivitySerializer
     queryset = Activity.objects.all().order_by('-created_at_datetime')
-    filterset_fields = ['ic', 'title']
 
     def list(self, request):
         kwargs = {}
@@ -39,5 +40,51 @@ class AddActivityViewSet(viewsets.ModelViewSet):
                 return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['post'])
+    def cancel_activity(self, request):
+        serializer = ActivityCancelSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                activity = get_object_or_404(Activity, id=serializer.validated_data['id'])
+                activity.status = serializer.validated_data['status']
+                activity.save()
+                return Response({'message': 'Actividad cancelada'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['post'])
+    def cancel_activity(self, request):
+        serializer = ActivityCancelSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                activity = get_object_or_404(Activity, id=serializer.validated_data['id'])
+                activity.status = serializer.validated_data['status']
+                activity.save()
+                return Response({'message': 'Actividad cancelada'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['post'])
+    def reschedule_activity(self, request):
+        serializer = ActivityRescheduleSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                activity = get_object_or_404(Activity, id=serializer.validated_data['id'])
+                if activity.status == "DES":
+                    return Response({'property': 'No se puede reagendar una actividad cancelada'}, status=status.HTTP_400_BAD_REQUEST)
+                activity.schedule = serializer.validated_data['schedule']
+                activity.updated_at_datetime = datetime.now()
+                activity.save()
+                return Response({'message': 'Actividad reagendada'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 

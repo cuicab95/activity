@@ -38,7 +38,7 @@ class Property(RowControl):
 
 class Activity(RowControl):
     property = models.ForeignKey(Property, on_delete=models.CASCADE, verbose_name=_("Propiedad"))
-    schedule = models.DateTimeField(verbose_name=_("Fecha programada"))
+    schedule = models.DateTimeField(verbose_name=_("Fecha agendada"))
     title = models.CharField(max_length=255, verbose_name=_("Título"))
 
     def __str__(self):
