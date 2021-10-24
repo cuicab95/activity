@@ -56,6 +56,7 @@ class AddActivityViewSet(viewsets.ModelViewSet):
             try:
                 activity = get_object_or_404(Activity, id=serializer.validated_data['id'])
                 activity.status = serializer.validated_data['status']
+                activity.updated_at_datetime = datetime.datetime.now()
                 activity.save()
                 return Response({'message': 'Estatus actualizado'}, status=status.HTTP_200_OK)
             except Exception as e:

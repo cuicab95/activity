@@ -12,6 +12,7 @@ class RowControl(models.Model):
     STATUS_CHOICES = (
         ('ACT', 'Activado'),
         ('DES', 'Desactivado'),
+        ('REA', 'Realizada'),
     )
     created_at_datetime = models.DateTimeField(auto_now_add=True, verbose_name=_("Fecha de creación"))
     updated_at_datetime = models.DateTimeField(auto_now_add=True, verbose_name=_("Fecha de actualización"))
@@ -53,6 +54,17 @@ class Activity(RowControl):
 
     def __str__(self):
         return self.title
+
+    def get_status_text(self):
+        status_text = ""
+        if self.status == "ACT":
+            if self.schedule.date() >= datetime.datetime.now().date():
+                status_text = "Pendiente a realizar"
+            else:
+                status_text = "Atrasada"
+        if self.status == "REA":
+            status_text = "Finalizada"
+        return status_text
 
     class Meta:
         verbose_name = _("Actividad")
