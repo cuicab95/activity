@@ -36,24 +36,13 @@ class AddActivityViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             try:
                 property_obj = serializer.validated_data['property']
+                schedule = serializer.validated_data['schedule']
                 if property_obj.status != "ACT":
                     return Response({'property': 'La propiedad debe tener el estatus activada'}, status=status.HTTP_400_BAD_REQUEST)
+                if property_obj.schedule_available and schedule < property_obj.schedule_available:
+                    return Response({'message': 'No se puede crear actividades con la misma fecha y hora'}, status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 return Response({'message': 'Actividad creada'}, status=status.HTTP_200_OK)
-            except Exception as e:
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=False, methods=['post'])
-    def cancel_activity(self, request):
-        serializer = ActivityCancelSerializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                activity = get_object_or_404(Activity, id=serializer.validated_data['id'])
-                activity.status = serializer.validated_data['status']
-                activity.save()
-                return Response({'message': 'Actividad cancelada'}, status=status.HTTP_200_OK)
             except Exception as e:
                 return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:

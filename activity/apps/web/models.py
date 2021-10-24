@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+import datetime
 
 # Create your models here.
 
@@ -20,6 +21,15 @@ class RowControl(models.Model):
         abstract = True
         verbose_name = _("Control de cambios")
         verbose_name_plural = _("Control de cambios")
+
+    @property
+    def schedule_available(self):
+        last_schedule = Activity.objects.filter(property=self).order_by('-schedule')
+        if last_schedule.exists():
+            last_schedule = last_schedule.first().schedule + datetime.timedelta(hours=1)
+        else:
+            last_schedule = None
+        return last_schedule
 
 
 class Property(RowControl):
