@@ -23,6 +23,8 @@ __OWN_APPS = (
 
 __THIRD_PARTY_APPS = (
     'rest_framework',
+    'drf_yasg',
+    'django_filters',
 )
 
 INSTALLED_APPS = __BEFORE_DJANGO_APPS + __DJANGO_APPS + __AFTER_DJANGO_APPS + __OWN_APPS + __THIRD_PARTY_APPS
