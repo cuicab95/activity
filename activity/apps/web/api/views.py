@@ -45,7 +45,7 @@ class AddActivityViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 return Response({'message': 'Actividad creada'}, status=status.HTTP_200_OK)
             except Exception as e:
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -60,7 +60,7 @@ class AddActivityViewSet(viewsets.ModelViewSet):
                 activity.save()
                 return Response({'message': 'Estatus actualizado'}, status=status.HTTP_200_OK)
             except Exception as e:
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -77,7 +77,7 @@ class AddActivityViewSet(viewsets.ModelViewSet):
                 activity.save()
                 return Response({'message': 'Actividad reagendada'}, status=status.HTTP_200_OK)
             except Exception as e:
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -16,7 +16,7 @@ class ActivityPreviewSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super(ActivityPreviewSerializer, self).to_representation(instance)
         representation['property'] = PropertyPreviewSerializer(instance=instance.property).data
-        representation['survey'] = "https://test.com"
+        representation['survey'] = f"http://localhost:8000/api/survey/{str(instance.id)}"
         representation['status'] = instance.get_status_text()
         return representation
 
