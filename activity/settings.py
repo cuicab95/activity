@@ -36,6 +36,7 @@ ALLOWED_HOSTS = settings['SECURITY']['ALLOWED_HOSTS']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,3 +65,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'activity.wsgi.application'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': "ec2-34-193-46-89.compute-1.amazonaws.com",
+        'NAME': "dabf7v46snkq5j",
+        'USER': "jukkybgaxnhdkf",
+        'PASSWORD': "a7687b708cdbb2e1aec1752d0276dff45845ef8dae019c5a56f88d987c09a037",
+        'PORT': "5432",
+    }
+}
