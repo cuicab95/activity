@@ -13,11 +13,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os, datetime
 import platform
 from .core.applist import *
-from .core.database import *
 from .core.internationalization import *
-from .core.staticfiles import *
 from .core.json_reader import json_settings
 from .core.api import *
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,5 +75,6 @@ DATABASES = {
     }
 }
 
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+django_heroku.settings(locals())
