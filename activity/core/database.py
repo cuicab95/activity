@@ -4,7 +4,7 @@ settings = json_settings()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': settings["DB"]["HOST"],
         'NAME': settings["DB"]["NAME"],
         'USER': settings["DB"]["USER"],

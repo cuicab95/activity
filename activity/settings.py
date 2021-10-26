@@ -30,7 +30,7 @@ SITE_ID = 1
 SECRET_KEY = '3$ddbj+--ib%)141h@6fvy1fq5kp^y1^c%lmkf4rz5gzn&ffu6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = settings['SECURITY']['ALLOWED_HOSTS']
 
